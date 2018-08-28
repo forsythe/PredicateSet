@@ -100,4 +100,21 @@ class PredicateSetTest {
         intSet.clear();
         assertEquals(0, intSet.size());
     }
+
+    @Test
+    void setMinus(){
+        intSet.addAll(Arrays.asList(1, 2, 3, 4, 5));
+        assertFalse(intSet.setMinus(Arrays.asList(200, 300, 100)));
+        assertTrue(intSet.setMinus(Arrays.asList(2, 3, 4, 10)));
+        assertEquals(2, intSet.size());
+
+    }
+
+    @Test
+    void union(){
+        intSet.addAll(Arrays.asList(1, 2, 3, 4, 5));
+        assertTrue(intSet.union(Arrays.asList(2, 3, 10, 12)));
+        assertEquals(7, intSet.size());
+        assertFalse(intSet.union(Arrays.asList(2, 3, 10, 12)));
+    }
 }

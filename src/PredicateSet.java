@@ -34,7 +34,7 @@ public class PredicateSet<E> {
 
     public boolean remove(Object o) {
         try {
-            if (!contains((E) o))
+            if (!contains(o))
                 return false;
         } catch (ClassCastException cce) {
             return false;
@@ -76,7 +76,7 @@ public class PredicateSet<E> {
         for (var x : c) {
             try {
                 if (contains(x)) {
-                    intersection.add((E) x);
+                    intersection.add(x);
                 }
             } catch (ClassCastException ignored) {
             }
@@ -86,6 +86,33 @@ public class PredicateSet<E> {
         this.rootPredicate = intersection.rootPredicate;
         this.size = intersection.size;
 
+        return changed;
+    }
+
+    public boolean setMinus(Collection<? extends E> c) {
+
+        var changed = false;
+        for (var x : c) {
+            try {
+                if (remove(x)) {
+                    changed = true;
+                }
+            } catch (ClassCastException ignored) {
+            }
+        }
+        return changed;
+    }
+
+    public boolean union(Collection<? extends E> c) {
+        var changed = false;
+        for (var x : c) {
+            try {
+                if (add(x)) {
+                    changed = true;
+                }
+            } catch (ClassCastException ignored) {
+            }
+        }
         return changed;
     }
 
